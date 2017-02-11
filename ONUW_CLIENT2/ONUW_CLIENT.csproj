@@ -1,0 +1,357 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{20E2F1B9-906C-4EF5-9895-5248CED93268}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WindowsFormsApplication1</RootNamespace>
+    <AssemblyName>WindowsFormsApplication1</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EPPlus">
+      <HintPath>..\dlls\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.SHDocVw, Version=1.1.0.0, Culture=neutral, PublicKeyToken=db7cfd3acb5ad44e, processorArchitecture=MSIL">
+      <HintPath>..\packages\WatiN.2.1.0\lib\net40\Interop.SHDocVw.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Jia, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Jia\bin\Debug\Jia.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\packages\WatiN.2.1.0\lib\net40\Microsoft.mshtml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\..\..\Windows\assembly\GAC_MSIL\Microsoft.Office.Interop.Excel\15.0.0.0__71e9bce111e9429c\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Outlook, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Office.Tools, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Office.Tools.Excel.v9.0, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Windows\assembly\GAC_MSIL\Microsoft.Office.Tools.Excel.v9.0\9.0.0.0__b03f5f7f11d50a3a\Microsoft.Office.Tools.Excel.v9.0.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Mono.Security">
+      <HintPath>..\dlls\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Npgsql">
+      <HintPath>..\..\..\Desktop\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot">
+      <HintPath>..\packages\OxyPlot.Core.2015.1.708-alpha\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1+Xamarin.iOS10\OxyPlot.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WatiN.Core, Version=2.1.0.1196, Culture=neutral, PublicKeyToken=db7cfd3acb5ad44e, processorArchitecture=MSIL">
+      <HintPath>..\packages\WatiN.2.1.0\lib\net40\WatiN.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BhargaviScript.cs" />
+    <Compile Include="Calender.cs" />
+    <Compile Include="Database.cs" />
+    <Compile Include="confirm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="confirm.Designer.cs">
+      <DependentUpon>confirm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DeleteContact.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeleteContact.Designer.cs">
+      <DependentUpon>DeleteContact.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DoTheMath.cs" />
+    <Compile Include="FindContact.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FindContact.Designer.cs">
+      <DependentUpon>FindContact.cs</DependentUpon>
+    </Compile>
+    <Compile Include="findEpitope.cs" />
+    <Compile Include="GenerateEpitopeFigure.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GenerateEpitopeFigure.Designer.cs">
+      <DependentUpon>GenerateEpitopeFigure.cs</DependentUpon>
+    </Compile>
+    <Compile Include="heatmap.cs" />
+    <Compile Include="Map.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Map.Designer.cs">
+      <DependentUpon>Map.cs</DependentUpon>
+    </Compile>
+    <Compile Include="myProgressBar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="myProgressBar.Designer.cs">
+      <DependentUpon>myProgressBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Individial.cs" />
+    <Compile Include="ONUW_CLIENT.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ONUW_CLIENT.Designer.cs">
+      <DependentUpon>ONUW_CLIENT.cs</DependentUpon>
+    </Compile>
+    <Compile Include="option.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="option.Designer.cs">
+      <DependentUpon>option.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Other.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Other.Designer.cs">
+      <DependentUpon>Other.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Outlook.cs" />
+    <Compile Include="pokemon.cs" />
+    <Compile Include="Scheduling.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Scheduling.Designer.cs">
+      <DependentUpon>Scheduling.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Security.cs" />
+    <Compile Include="SQLDatabase.cs" />
+    <Compile Include="thesis.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="thesis.Designer.cs">
+      <DependentUpon>thesis.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserPass.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserPass.Designer.cs">
+      <DependentUpon>UserPass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="XML.cs" />
+    <Compile Include="MainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow.Designer.cs">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AddContact.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddContact.Designer.cs">
+      <DependentUpon>AddContact.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="confirm.resx">
+      <DependentUpon>confirm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DeleteContact.resx">
+      <DependentUpon>DeleteContact.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FindContact.resx">
+      <DependentUpon>FindContact.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GenerateEpitopeFigure.resx">
+      <DependentUpon>GenerateEpitopeFigure.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow.resx">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AddContact.resx">
+      <DependentUpon>AddContact.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Map.resx">
+      <DependentUpon>Map.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ONUW_CLIENT.resx">
+      <DependentUpon>ONUW_CLIENT.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="option.resx">
+      <DependentUpon>option.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="myProgressBar.resx">
+      <DependentUpon>myProgressBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Other.resx">
+      <DependentUpon>Other.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Excel.cs" />
+    <EmbeddedResource Include="Scheduling.resx">
+      <DependentUpon>Scheduling.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="thesis.resx">
+      <DependentUpon>thesis.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserPass.resx">
+      <DependentUpon>UserPass.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="LOG1.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 4.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="LCC11">
+      <Guid>{EDCD5812-6A06-43C3-AFAC-46EF5D14E22C}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>7</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

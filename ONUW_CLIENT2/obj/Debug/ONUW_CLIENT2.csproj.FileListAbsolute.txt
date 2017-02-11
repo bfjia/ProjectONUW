@@ -1,0 +1,16 @@
+C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\ONUW_CLIENT2.exe.config
+C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\ONUW_CLIENT2.exe
+C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\ONUW_CLIENT2.pdb
+C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\Jia.dll
+C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\Newtonsoft.Json.dll
+C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\Renci.SshNet.dll
+C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\Npgsql.dll
+C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\Mono.Security.dll
+C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\Newtonsoft.Json.xml
+C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\Npgsql.xml
+C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\obj\Debug\ONUW_CLIENT2.ONUW_CLIENT.resources
+C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\obj\Debug\ONUW_CLIENT2.Properties.Resources.resources
+C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\obj\Debug\ONUW_CLIENT2.csproj.GenerateResource.Cache
+C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\obj\Debug\ONUW_CLIENT2.exe
+C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\obj\Debug\ONUW_CLIENT2.pdb
+C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\obj\Debug\ONUW_CLIENT2.csprojResolveAssemblyReference.cache
