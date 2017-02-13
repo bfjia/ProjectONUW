@@ -11,27 +11,17 @@ using System.Diagnostics;
 
 namespace ONUW_SERVER
 {
-    // State object for reading client data asynchronously
-    public class StateObject
+    public class ONUW_SERVER
     {
-        // Client  socket.
-        public Socket workSocket = null;
-        // Size of receive buffer.
-        public const int BufferSize = 1024;
-        // Receive buffer.
-        public byte[] buffer = new byte[BufferSize];
-        // Received data string.
-        public StringBuilder sb = new StringBuilder();
-    }
-
-    public class AsynchronousSocketListener
-    {
-        // Thread signal.
-        public static ManualResetEvent allDone = new ManualResetEvent(false);
-
-        public AsynchronousSocketListener()
+        public ONUW_SERVER()
         {
         }
+
+        #region TCP functions
+
+        // Thread signal.
+        public static ManualResetEvent allDone = new ManualResetEvent(false);
+        static IPAddress ip = IPAddress.Parse("127.0.0.1");
 
         public static void StartListening(IPAddress ip)
         {
@@ -169,8 +159,9 @@ namespace ONUW_SERVER
                 Console.WriteLine(e.ToString());
             }
         }
+        #endregion
 
-
+        #region variables for the server
         static bool setup = true;
         static bool started = false;
         static bool ended = false;
@@ -181,229 +172,22 @@ namespace ONUW_SERVER
         static bool computerDoneActions = false;
         static bool computerProcessingActions = false;
         static Stopwatch t = new Stopwatch();
-
-        private static void MainGameLoop(Socket handler, string data)
-        {
-            string action, id;
-
-            try
-            {
-                action = getAction(data);
-                id = getUser(data);
-            }
-            catch (Exception e)
-            {
-                Send(handler, "BAD REQUEST FORMAT");
-                //throw new Exception();
-                return;
-            }
-
-            if (setup)
-            {
-                if (action == "Start")
-                {
-                    if (players.ContainsKey(getUser(data)))
-                    {
-                        players[getUser(data)].ready = true;
-                        Send(handler, "Status:Ready, waiting on others");
-                    }
-                    else
-                    {
-                        string guid  = Guid.NewGuid().ToString();
-                        players.Add(guid, new Players { gameTag = getUser(data), gameID = guid, role = "unassigned", voteCount = 0, voted = "", ready = false, actionResult = "", actionDone = false,actionInput=null });
-                        Send(handler, "Status:GUID, " + guid);
-                        players[getUser(data)].ready = true;
-                    }
-
-                }
-                else if (action == "WaitingToStart")
-                {
-                    //return json of player data
-                    playerData.totalPlayers = NumPlayer;
-                    playerData.players = new List<Players>();
-                    foreach (KeyValuePair<string, Players> p in players)
-                        playerData.players.Add(p.Value);
-                    playerData.middleCards = middleCards;
-
-                    Send(handler, JsonConvert.SerializeObject(playerData));
-
-                    foreach (var p in players)
-                    {
-                        if (p.Value.ready && players.Count == NumPlayer) setup = false;
-                        else { setup = true; break; }
-                    }
-                }
-                else if (action == "NewPlayer")
-                {
-                    string guid = Guid.NewGuid().ToString();
-                    if (players.ContainsKey(id))
-                        Send(handler, "NewUserRequired");
-                    else if (players.Count+1 > NumPlayer)
-                        Send(handler, "TooManyPlayers");
-                    else
-                    {
-                        players.Add(guid, new Players { gameTag = getUser(data), gameID = guid, role = "unassigned", voteCount = 0, voted = "", ready = false, actionResult = "", actionDone = false, actionInput = null });
-                        Send(handler, "Status:GUID, " + guid);
-                    }
-                    //foreach (KeyValuePair<string, Players> p in players)
-                   // {
-                    //    Console.WriteLine(p.Key + p.Value.gameTag);
-                    //}
-                  //  Console.WriteLine();
-                }
-            }
-            else if (!started && !setup)
-            {
-                started = true;
-                //assign role
-                generateRoles();
-                //return json of player data
-                playerData.totalPlayers = NumPlayer;
-                playerData.players = new List<Players>();
-                foreach (KeyValuePair<string, Players> p in players)
-                    playerData.players.Add(p.Value);
-                playerData.middleCards = middleCards;
-
-                Send(handler, "setup complete");//JsonConvert.SerializeObject(playerData));
-
-                foreach (KeyValuePair<string, Players> p in players)
-                {
-                    Console.WriteLine(p.Key + "\\" + p.Value.gameTag + "\\" + p.Value.role);
-                }
-
-            }
-            else if (started && !ended)
-            {
-                if (action == "Start" || action == "WaitingToStart")
-                {
-                    //return json of player data
-                    playerData.totalPlayers = NumPlayer;
-                    playerData.players = new List<Players>();
-                    foreach (KeyValuePair<string, Players> p in players)
-                        playerData.players.Add(p.Value);
-                    playerData.middleCards = middleCards;
-
-                    Send(handler, "Status: GameStarting, "+ JsonConvert.SerializeObject(playerData));
-
-                   // Send(handler, "Status: GameStarted, " + s);
-                    //here it should return all player's guid
-                }
-                else if (action == "GetRole")
-                {
-                    Send(handler, players[id].role);
-                }
-                else if (action.Contains("performRoleAction"))
-                {
-                   // Send(handler, "Status: ActionRegistered");// "+);
-                    if (registerRoleActions(id, action))
-                        Send(handler, "Status: ActionRegistered");
-                    else
-                        Send(handler, "Status: IllegalAction");
-                }
-                else if (action.Contains("WaitingForActions"))
-                {
-                    if (computerProcessingActions)
-                        Send(handler, "Status:ActionWait");
-                    else if (everyOneDoneAction && !computerDoneActions)
-                    {
-                        performRoleActions();
-                        Send(handler, "Status:ActionWait");
-                    }
-                    else if (computerDoneActions)
-                    { 
-                        Send(handler, "Status:ActionComplete, " + players[id].actionResult);// + performRoleActions(players[id].role, action));
-                    }
-                    else
-                        Send(handler, "Status:ActionWait");
-                }
-                
-                else if (action == "DiscussionWait") 
-                {
-                    //10minute timer to vote
-                    if (t.IsRunning)
-                    {
-                        if (t.Elapsed.TotalSeconds < 175)
-                            Send(handler, "Status: DiscussionWait, " + t.Elapsed.TotalSeconds);
-                        else
-                        {
-                            //t.Reset();
-                            Send(handler, "Status: VoteStart");
-                        }
-                    }
-                    else
-                    {
-                        t.Start();
-                        Send(handler, "Status: DiscussionStart," + t.Elapsed.TotalSeconds);
-                    }
-//                    Send(handler, "Status: DiscussionWait");
-                }
-                else if (action.Contains("VoteWerewolf"))
-                {
-                    players[id].voted = action.Substring(action.IndexOf(">>>")+3);
-                    Send(handler, "Status: Voted " + action.ToString());
-
-                }
-                else if (action == "waitingforvoteresults")
-                {
-                    foreach (var p in players)
-                    {
-                        if (p.Value.voted != "") ended = true;
-                        else { ended = false;  break; }
-                    }
-                    Send(handler, "Status: VoteWait");
-                }
-            }
-            else if (ended)
-            {
-                if (!countedVote)
-                {
-                    foreach (var p in players)
-                    {
-                        players[p.Value.voted].voteCount++;
-                        if (p.Value.role == "hunter")
-                            p.Value.actionResult = p.Value.voted;
-                    }
-                    countedVote = true;
-                }
-
-                if (action == "waitingforvoteresults")
-                {
-                    //return json of player data
-                    playerData.totalPlayers = NumPlayer;
-                    playerData.players = new List<Players>();
-                    foreach (KeyValuePair<string, Players> p in players)
-                        playerData.players.Add(p.Value);
-                    playerData.middleCards = middleCards;
-
-                   // Send(handler, JsonConvert.SerializeObject(playerData));
-
-                    Send(handler, "Status: GameEnd, " + JsonConvert.SerializeObject(playerData));
-                }
-
-                Console.WriteLine("press any key to restart a new game, else press 'x' to close...");
-                Console.ReadKey();
-                Process.Start(System.IO.Directory.GetCurrentDirectory() + "\\ONUW_SERVER.exe", ip.ToString());
-                Environment.Exit(0);
-            }
-
-
-
-            //set up the game.
-            //data structure: username>>>action|||<eof>
-
-        }
         static bool countedVote = false;
+        static int NumPlayer = 5;
+        static List<string> chosenRoles = new List<string>();
 
+        #endregion
 
-        private static string getAction(string s)
+        #region ONUW server functions
+        private static string getAction(string s)//split the incoming request to get the player action
         {
             return s.Substring(s.IndexOf("|||") + 3);
         }
-        private static string getUser(string s)
+        private static string getUser(string s)//split the incoming request to get the player guid
         {
             return s.Substring(0, s.IndexOf("|||"));
         }
-        private static void generateRoles()
+        private static void generateRoles()//function to generate the roles that will be in play and assign them to players
         {
             List<string> rolesLeft = chosenRoles;
             Random rand = new Random();
@@ -427,7 +211,7 @@ namespace ONUW_SERVER
                 throw new Exception("not all roles assigned");
 
         }
-        private static bool registerRoleActions(string id, string action)
+        private static bool registerRoleActions(string id, string action)//set a flag in the player datas, not much use
         {
             //actions should be formatted as the follows: guid|||performRoleAction>>>input1+input2+input3...
             //do action.
@@ -638,7 +422,7 @@ namespace ONUW_SERVER
             return true;
 
         }
-        private static void performRoleActions()
+        private static void performRoleActions()//after all the performAction requests are received, process the actions in a specific order
         {
             computerDoneActions = false;
             computerProcessingActions = true;
@@ -773,11 +557,219 @@ namespace ONUW_SERVER
             computerProcessingActions = false;
         }
 
-        static int NumPlayer = 5;
-        static List<string> chosenRoles = new List<string>();
-        static IPAddress ip = IPAddress.Parse("127.0.0.1");
+        private static void MainGameLoop(Socket handler, string data)//the main loop that takes in the request and progresses the game based on the current state
+        {
+            string action, id;
 
-        public static int Main(String[] args)
+            try
+            {
+                action = getAction(data);
+                id = getUser(data);
+            }
+            catch (Exception e)
+            {
+                Send(handler, "BAD REQUEST FORMAT");
+                //throw new Exception();
+                return;
+            }
+
+            if (setup)
+            {
+                if (action == "Start")
+                {
+                    if (players.ContainsKey(getUser(data)))
+                    {
+                        players[getUser(data)].ready = true;
+                        Send(handler, "Status:Ready, waiting on others");
+                    }
+                    else
+                    {
+                        string guid = Guid.NewGuid().ToString();
+                        players.Add(guid, new Players { gameTag = getUser(data), gameID = guid, role = "unassigned", voteCount = 0, voted = "", ready = false, actionResult = "", actionDone = false, actionInput = null });
+                        Send(handler, "Status:GUID, " + guid);
+                        players[getUser(data)].ready = true;
+                    }
+
+                }
+                else if (action == "WaitingToStart")
+                {
+                    //return json of player data
+                    playerData.totalPlayers = NumPlayer;
+                    playerData.players = new List<Players>();
+                    foreach (KeyValuePair<string, Players> p in players)
+                        playerData.players.Add(p.Value);
+                    playerData.middleCards = middleCards;
+
+                    Send(handler, JsonConvert.SerializeObject(playerData));
+
+                    foreach (var p in players)
+                    {
+                        if (p.Value.ready && players.Count == NumPlayer) setup = false;
+                        else { setup = true; break; }
+                    }
+                }
+                else if (action == "NewPlayer")
+                {
+                    string guid = Guid.NewGuid().ToString();
+                    if (players.ContainsKey(id))
+                        Send(handler, "NewUserRequired");
+                    else if (players.Count + 1 > NumPlayer)
+                        Send(handler, "TooManyPlayers");
+                    else
+                    {
+                        players.Add(guid, new Players { gameTag = getUser(data), gameID = guid, role = "unassigned", voteCount = 0, voted = "", ready = false, actionResult = "", actionDone = false, actionInput = null });
+                        Send(handler, "Status:GUID, " + guid);
+                    }
+                    //foreach (KeyValuePair<string, Players> p in players)
+                    // {
+                    //    Console.WriteLine(p.Key + p.Value.gameTag);
+                    //}
+                    //  Console.WriteLine();
+                }
+            }
+            else if (!started && !setup)
+            {
+                started = true;
+                //assign role
+                generateRoles();
+                //return json of player data
+                playerData.totalPlayers = NumPlayer;
+                playerData.players = new List<Players>();
+                foreach (KeyValuePair<string, Players> p in players)
+                    playerData.players.Add(p.Value);
+                playerData.middleCards = middleCards;
+
+                Send(handler, "setup complete");//JsonConvert.SerializeObject(playerData));
+
+                foreach (KeyValuePair<string, Players> p in players)
+                {
+                    Console.WriteLine(p.Key + "\\" + p.Value.gameTag + "\\" + p.Value.role);
+                }
+
+            }
+            else if (started && !ended)
+            {
+                if (action == "Start" || action == "WaitingToStart")
+                {
+                    //return json of player data
+                    playerData.totalPlayers = NumPlayer;
+                    playerData.players = new List<Players>();
+                    foreach (KeyValuePair<string, Players> p in players)
+                        playerData.players.Add(p.Value);
+                    playerData.middleCards = middleCards;
+
+                    Send(handler, "Status: GameStarting, " + JsonConvert.SerializeObject(playerData));
+
+                    // Send(handler, "Status: GameStarted, " + s);
+                    //here it should return all player's guid
+                }
+                else if (action == "GetRole")
+                {
+                    Send(handler, players[id].role);
+                }
+                else if (action.Contains("performRoleAction"))
+                {
+                    // Send(handler, "Status: ActionRegistered");// "+);
+                    if (registerRoleActions(id, action))
+                        Send(handler, "Status: ActionRegistered");
+                    else
+                        Send(handler, "Status: IllegalAction");
+                }
+                else if (action.Contains("WaitingForActions"))
+                {
+                    if (computerProcessingActions)
+                        Send(handler, "Status:ActionWait");
+                    else if (everyOneDoneAction && !computerDoneActions)
+                    {
+                        performRoleActions();
+                        Send(handler, "Status:ActionWait");
+                    }
+                    else if (computerDoneActions)
+                    {
+                        Send(handler, "Status:ActionComplete, " + players[id].actionResult);// + performRoleActions(players[id].role, action));
+                    }
+                    else
+                        Send(handler, "Status:ActionWait");
+                }
+
+                else if (action == "DiscussionWait")
+                {
+                    //10minute timer to vote
+                    if (t.IsRunning)
+                    {
+                        if (t.Elapsed.TotalSeconds < 175)
+                            Send(handler, "Status: DiscussionWait, " + t.Elapsed.TotalSeconds);
+                        else
+                        {
+                            //t.Reset();
+                            Send(handler, "Status: VoteStart");
+                        }
+                    }
+                    else
+                    {
+                        t.Start();
+                        Send(handler, "Status: DiscussionStart," + t.Elapsed.TotalSeconds);
+                    }
+                    //                    Send(handler, "Status: DiscussionWait");
+                }
+                else if (action.Contains("VoteWerewolf"))
+                {
+                    players[id].voted = action.Substring(action.IndexOf(">>>") + 3);
+                    Send(handler, "Status: Voted " + action.ToString());
+
+                }
+                else if (action == "waitingforvoteresults")
+                {
+                    foreach (var p in players)
+                    {
+                        if (p.Value.voted != "") ended = true;
+                        else { ended = false; break; }
+                    }
+                    Send(handler, "Status: VoteWait");
+                }
+            }
+            else if (ended)
+            {
+                if (!countedVote)
+                {
+                    foreach (var p in players)
+                    {
+                        players[p.Value.voted].voteCount++;
+                        if (p.Value.role == "hunter")
+                            p.Value.actionResult = p.Value.voted;
+                    }
+                    countedVote = true;
+                }
+
+                if (action == "waitingforvoteresults")
+                {
+                    //return json of player data
+                    playerData.totalPlayers = NumPlayer;
+                    playerData.players = new List<Players>();
+                    foreach (KeyValuePair<string, Players> p in players)
+                        playerData.players.Add(p.Value);
+                    playerData.middleCards = middleCards;
+
+                    // Send(handler, JsonConvert.SerializeObject(playerData));
+
+                    Send(handler, "Status: GameEnd, " + JsonConvert.SerializeObject(playerData));
+                }
+
+                Console.WriteLine("press any key to restart a new game, else press 'x' to close...");
+                Console.ReadKey();
+                Process.Start(System.IO.Directory.GetCurrentDirectory() + "\\ONUW_SERVER.exe", ip.ToString());
+                Environment.Exit(0);
+            }
+
+
+
+            //set up the game.
+            //data structure: username>>>action|||<eof>
+
+        }
+        #endregion
+
+        public static int Main(String[] args) //entry point, set server/game parameters
         {
             if (Environment.MachineName.ToLower().Contains("brian") || Environment.MachineName.ToLower().Contains("tam") || Environment.MachineName.ToLower().Contains("auxori") || Environment.MachineName.ToLower().Contains("gucciball"))
                 Console.WriteLine("screw you brian tam");
@@ -921,7 +913,21 @@ namespace ONUW_SERVER
         }
     }
 
-    public class Players
+
+    // State object for receiving data from remote device.
+    public class StateObject
+    {
+        // Client socket.
+        public Socket workSocket = null;
+        // Size of receive buffer.
+        public const int BufferSize = 256;
+        // Receive buffer.
+        public byte[] buffer = new byte[BufferSize];
+        // Received data string.
+        public StringBuilder sb = new StringBuilder();
+    }
+
+    public class Players //data structure for individual player data
     {
         public string gameID { get; set; }
         public string role { get; set; }
@@ -929,21 +935,15 @@ namespace ONUW_SERVER
         public bool ready { get; set; }
         public string voted { get; set; }
         public int voteCount { get; set; }
-        public List<string> actionInput { get; set; }
         public string actionResult { get; set; }
         public bool actionDone { get; set; }
+        public List<string> actionInput { get; set; }
     }
-
-    public class Roles
-    {
-
-    }
-
-    public class JsonStruct
+    public class JsonStruct //json structure for player datas and middle cards
     {
         public int totalPlayers { get; set; }
         public List<Players> players { get; set; }
-        public Dictionary<int,string> middleCards { get; set; }
+        public Dictionary<int, string> middleCards { get; set; }
     }
 }
 
