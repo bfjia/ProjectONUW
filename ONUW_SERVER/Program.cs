@@ -228,84 +228,23 @@ namespace ONUW_SERVER
             var p = players[id];
             if (p.role == "werewolf")
             {
-                //in: NA or 1 index
-                //return: 2 guids of the werewolves
-               /* if (inputs.Count == 1)
-                {
-                    int index = -1;
-
-                    if (int.TryParse(inputs[0], out index))
-                    {
-                        //valid indice number
-                        if (index >= 0 && index < 3)
-                            p.actionInput = inputs;
-                        else
-                        {
-                            p.actionInput = null;
-                            return false;
-                        }
-                    }
-                    else
-                    {
-                        p.actionInput = null;
-                        return false;
-                    }
-                }
-                else if (inputs.Count == 0)
-                    p.actionInput = inputs;
-                else
-                {
-                    p.actionInput = null;
-                    return false;
-                }*/
                 p.actionDone = true;
             }
             else if (p.role == "seer")
             {
-                //in: 1guid or 2 indices
-                //return 1x guid:role OR 2x index:role. 
-                /*if (inputs.Count == 1)
+                p.actionDone = true;
+            }
+            else if (p.role == "paranormal investigator")
+            {
+                if (inputs.Count == 1)
                 {
-                    Guid guid;
-                    if (Guid.TryParse(inputs[0], out guid))
-                        p.actionInput = inputs;
-                    else
-                    {
-                        p.actionInput = null;
-                        return false;
-                    }
-                }
-                else if (inputs.Count == 2)
-                {
-                    int index = -1;
-                    foreach (string s in inputs)
-                    {
-                        if (int.TryParse(s, out index))
-                        {
-                            //valid indice number
-                            if (index >= 0 && index < 3)
-                                p.actionInput = inputs;
-                            else
-                            {
-                                p.actionInput = null;
-                                return false;
-                            }
-                        }
-                        else
-                        {
-                            p.actionInput = null;
-                            return false;
-                        }
-
-                    }
+                    p.actionInput = inputs;
+                    p.actionDone = true;
                 }
                 else
                 {
-                    p.actionInput = null;
-                    return false;
+                    p.actionDone = true;
                 }
-                */
-                p.actionDone = true;
             }
             else if (p.role == "robber")
             {
@@ -512,6 +451,23 @@ namespace ONUW_SERVER
             }
             if (playerRoles.ContainsKey("apprentice seer"))
             {
+                //client side
+                players[playerRoles["apprentice seer"]].actionResult = "Completed";
+                Console.WriteLine("apprentice seer action registered");
+            }
+            if (playerRoles.ContainsKey("paranormal investigator"))
+            {
+                //client side
+                if (players[playerRoles["paranormal investigator"]].actionInput.Count > 0)
+                {
+                    players[playerRoles["paranormal investigator"]].role = players[playerRoles["paranormal investigator"]].actionInput[0];
+                    players[playerRoles["paranormal investigator"]].actionResult = "PI role switched with " + players[playerRoles["paranormal investigator"]].actionInput[0];
+                }
+                else
+                {
+                    players[playerRoles["paranormal investigator"]].actionResult = "Completed";
+                }
+                Console.WriteLine("PI action registered");
             }
             if (playerRoles.ContainsKey("robber"))
             {
@@ -830,6 +786,8 @@ namespace ONUW_SERVER
             availableRoles.Add("mason");
             availableRoles.Add("mason");
             availableRoles.Add("mystic wolf");
+            availableRoles.Add("apprentice seer");
+            availableRoles.Add("paranormal investigator");
 
             Console.WriteLine("Please choose {0} roles to begin the game...", (NumPlayer+3).ToString());
             Console.WriteLine("type a role from the following list or type in 'recommended' for auto role picks: ");

@@ -241,7 +241,7 @@ namespace ONUW_CLIENT2
             button1.Text = "Save!";
             if (Environment.MachineName.ToLower().Contains("brian") || Environment.MachineName.ToLower().Contains("tam") || Environment.MachineName.ToLower().Contains("auxori") || Environment.MachineName.ToLower().Contains("gucciball"))
                 Console.WriteLine("screw you brian tam");
-            //button4.Visible = true;
+            button4.Visible = true;
         }
 
         private void button1_Click_1(object sender, EventArgs e) //connect
@@ -723,6 +723,207 @@ namespace ONUW_CLIENT2
                 richTextBox1.AppendText("\n" + self.actionResult);
                 #endregion
             }
+            else if (self.role == "apprentice seer")
+            {
+                #region appre seer
+                label1.Text = "Choose to view 1 center card...";
+                guidClicked = "";
+                while (numRevealed < 1)
+                {
+                retry:
+                    if (guidClicked == "")
+                    {
+                        Application.DoEvents();
+                    }
+                    else
+                    {
+                        try { int.Parse(guidClicked); }
+                        catch { MessageBox.Show("Choose a middle card!"); guidClicked = ""; goto retry; }
+
+                        foreach (Button b in middleButtons)
+                        {
+                            if ((string)b.Tag == guidClicked)
+                            {
+                                if (b.Text.Contains("Unknown"))
+                                {
+                                    b.Text = "Middle Card " + guidClicked + " Role: " + playerData.middleCards[int.Parse(guidClicked) - 1] + "?";
+                                    numRevealed++;// = 3;
+                                    guidClicked = "";
+                                    goto Foo;
+                                }
+                                else
+                                {
+                                    guidClicked = "";
+                                    MessageBox.Show("Dont you want to see another card?");
+                                    goto retry;
+                                }
+                            }
+                            //guidClicked = "";
+                            //numRevealed++;
+                        }
+                    }
+                }
+
+            Foo:
+                guidClicked = "";
+                numRevealed = 0;
+                string actionResult = sendPerformActionRequest("");
+                self.actionResult = actionResult;
+                richTextBox1.AppendText("\n" + self.actionResult);
+                #endregion
+            }
+            else if (self.role == "paranormal investigator")
+            {
+                #region PI
+                label1.Text = "Choose to see up to two player cards...";
+                string first = "";
+                while (true)
+                {
+                retry:
+                    if (guidClicked == "")
+                    {
+                        Application.DoEvents();
+                    }
+                    else
+                    {
+                        try
+                        {
+                            Guid.Parse(guidClicked);
+                            if (guidClicked == self.gameID)
+                            {
+                                MessageBox.Show("You can only switch OTHER people's roles");
+                                guidClicked = "";
+                                goto retry;
+                            }
+                            if (first == "")
+                            {
+                                first = guidClicked;
+                                guidClicked = "";
+
+                                foreach (Button b in playerButtons)
+                                {
+                                    if ((string)b.Tag == first)
+                                    {
+                                        foreach (Players p in playerData.players)
+                                        {
+                                            if (p.gameID == (string)b.Tag)
+                                            {
+                                                if (p.role == "werewolf" || p.role == "alpha wolf" || p.role == "mystic wolf" || p.role == "tanner")
+                                                {
+                                                    //switch the damn role
+                                                    self.role = p.role;
+                                                    MessageBox.Show("Awh, you revealed a " + p.role + ", you have became a " + p.role);
+                                                    label1.Text = "Awh, you revealed a " + p.role + ", you have became a " + p.role;
+
+                                                    if (b.Text.Contains("<Player>") && b.Text.Contains("Unknown"))
+                                                    {
+                                                        b.Text = "<Player> " + p.gameTag + "\nRole: " + p.role + "?";             
+                                                        foreach (Button me in playerButtons)
+                                                        {
+                                                            if ((string)me.Tag == self.gameID)
+                                                                me.Text = "<ME> " + self.gameTag + "\nRole: " + self.role + "?";
+                                                        }
+                                                        string actionResult = sendPerformActionRequest(first);
+                                                        self.actionResult = actionResult;
+                                                        richTextBox1.AppendText("\n" + self.actionResult);
+                                                        goto foo;
+                                                    }
+                                                    else
+                                                    {
+                                                        guidClicked = "";
+                                                        MessageBox.Show("Dont you want to see another card?");
+                                                        goto retry;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    if (b.Text.Contains("<Player>") && b.Text.Contains("Unknown"))
+                                                    {
+                                                        b.Text = b.Text = "<Player> " + p.gameTag + "\nRole: " + p.role + "?";
+                                                        goto retry;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                            }
+                            else
+                            {
+                                if (guidClicked == first)
+                                {
+                                    MessageBox.Show("two of the same player clicked. try DIFFERENT players");
+                                    guidClicked = "";
+                                    goto retry;
+                                }
+                                else
+                                {
+                                    foreach (Button b in playerButtons)
+                                    {
+                                        if ((string)b.Tag == guidClicked)
+                                        {
+                                            foreach (Players p in playerData.players)
+                                            {
+                                                if (p.gameID == (string)b.Tag)
+                                                {
+                                                    if (p.role == "werewolf" || p.role == "alpha wolf" || p.role == "mystic wolf" || p.role == "tanner")
+                                                    {
+                                                        //switch the damn role
+                                                        self.role = p.role;
+                                                        MessageBox.Show("Awh, you revealed a " + p.role + ", you have became a " + p.role);
+                                                        label1.Text = "Awh, you revealed a " + p.role + ", you have became a " + p.role;
+
+                                                        if (b.Text.Contains("<Player>") && b.Text.Contains("Unknown"))
+                                                        {
+                                                            b.Text = b.Text = "<Player> " + p.gameTag + "\nRole: " + p.role + "?";
+                                                            foreach (Button me in playerButtons)
+                                                            {
+                                                                if ((string)me.Tag == self.gameID)
+                                                                    me.Text = "<ME> " + self.gameTag + "\nRole: " + self.role + "?";
+                                                            }
+                                                            string actionResult = sendPerformActionRequest(guidClicked);
+                                                            self.actionResult = actionResult;
+                                                            richTextBox1.AppendText("\n" + self.actionResult);
+                                                            goto foo;
+                                                        }
+                                                        else
+                                                        {
+                                                            guidClicked = "";
+                                                            MessageBox.Show("Dont you want to see another card?");
+                                                            goto retry;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        if (b.Text.Contains("<Player>") && b.Text.Contains("Unknown"))
+                                                        {
+                                                            label1.Text = "You revealed 2 player cards and stayed as the PI!";
+                                                            b.Text = "<Player> " + p.gameTag + "\nRole: " + p.role + "?";
+                                                            string actionResult = sendPerformActionRequest("");
+                                                            self.actionResult = actionResult;
+                                                            richTextBox1.AppendText("\n" + self.actionResult);
+                                                            goto foo;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("invalid choice, please choose a player");
+                            guidClicked = "";
+                        }
+                    }
+                }
+            foo:
+                guidClicked = "";
+                #endregion
+            }
             else if (self.role == "robber")
             {
                 #region robber
@@ -884,7 +1085,7 @@ namespace ONUW_CLIENT2
                         b.Text = "<ME> " + self.gameTag + "\nRole: " + self.role;
                 #endregion
             }
-            /*else if (self.role == "hunter")
+            else if (self.role == "hunter")
             {
                 //hunter
                 #region hunter
@@ -914,10 +1115,8 @@ namespace ONUW_CLIENT2
 
                     }
                 }
-            Foo:
-                Console.WriteLine("done");
                 #endregion
-            }*/
+            }
             else
             {
                 #region all other roles
