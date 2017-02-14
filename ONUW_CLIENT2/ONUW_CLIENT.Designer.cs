@@ -43,17 +43,17 @@
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(524, 63);
+            this.richTextBox1.Location = new System.Drawing.Point(689, 509);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(254, 286);
+            this.richTextBox1.Size = new System.Drawing.Size(230, 36);
             this.richTextBox1.TabIndex = 0;
-            this.richTextBox1.Text = "";
+            this.richTextBox1.Text = "//DEBUG OUTPUT CONSOLE";
             this.richTextBox1.Visible = false;
             this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(422, 207);
+            this.button1.Location = new System.Drawing.Point(605, 507);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 1;
@@ -63,7 +63,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(422, 206);
+            this.button2.Location = new System.Drawing.Point(605, 506);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 2;
@@ -73,7 +73,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(422, 207);
+            this.button3.Location = new System.Drawing.Point(605, 507);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 3;
@@ -83,7 +83,8 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(321, 208);
+            this.textBox1.Location = new System.Drawing.Point(504, 508);
+            this.textBox1.MaxLength = 30;
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(100, 20);
             this.textBox1.TabIndex = 4;
@@ -93,7 +94,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(349, 188);
+            this.label1.Location = new System.Drawing.Point(501, 492);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 5;
@@ -108,11 +109,12 @@
             this.button4.TabStop = false;
             this.button4.Text = "TEST BUTTON";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Visible = false;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(422, 207);
+            this.button5.Location = new System.Drawing.Point(605, 507);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(75, 23);
             this.button5.TabIndex = 7;
@@ -125,14 +127,14 @@
             // 
             this.richTextBox2.Location = new System.Drawing.Point(12, 13);
             this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(305, 336);
+            this.richTextBox2.Size = new System.Drawing.Size(305, 528);
             this.richTextBox2.TabIndex = 0;
             this.richTextBox2.Text = "//BFJIA_ONUW_CLIENT_DEBUG_MODE_ON";
             this.richTextBox2.TextChanged += new System.EventHandler(this.richTextBox2_TextChanged);
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(728, 6);
+            this.button6.Location = new System.Drawing.Point(323, 13);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(50, 21);
             this.button6.TabIndex = 8;
@@ -144,7 +146,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 361);
+            this.ClientSize = new System.Drawing.Size(928, 553);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);

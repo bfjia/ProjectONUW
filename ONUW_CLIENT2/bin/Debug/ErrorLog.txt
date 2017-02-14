@@ -1,0 +1,46 @@
+2/13/2017 9:24:20 PM
+	[INFO] successfully read from file: C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\data.txt
+2/13/2017 9:29:33 PM
+	[INFO] successfully read from file: C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\data.txt
+2/13/2017 9:31:03 PM
+	[INFO] successfully read from file: C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\data.txt
+2/13/2017 9:31:47 PM
+	[INFO] successfully read from file: C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\data.txt
+2/13/2017 9:32:05 PM
+	[INFO] successfully read from file: C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\data.txt
+2/13/2017 9:32:15 PM
+	[INFO] successfully read from file: C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\data.txt
+2/13/2017 9:32:15 PM
+	[INFO] successfully read from file: C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\data.txt
+2/13/2017 9:32:30 PM
+	[INFO] successfully read from file: C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\data.txt
+2/13/2017 9:32:39 PM
+	[INFO] successfully read from file: C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\data.txt
+2/13/2017 9:32:57 PM
+	[INFO] successfully read from file: C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\data.txt
+2/13/2017 9:35:33 PM
+	[INFO] successfully read from file: C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\data.txt
+2/13/2017 9:35:55 PM
+	[INFO] successfully read from file: C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\data.txt
+2/13/2017 9:37:16 PM
+	[INFO] successfully read from file: C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\data.txt
+2/13/2017 9:38:21 PM
+	[INFO] successfully read from file: C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\data.txt
+2/13/2017 9:38:29 PM
+	[INFO] successfully read from file: C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\data.txt
+2/13/2017 9:38:35 PM
+	[INFO] successfully read from file: C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\data.txt
+2/13/2017 9:38:49 PM
+	[INFO] successfully read from file: C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\data.txt
+2/13/2017 9:38:56 PM
+	[INFO] successfully read from file: C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\data.txt
+2/13/2017 9:39:07 PM
+	[INFO] successfully read from file: C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\data.txt
+2/13/2017 9:39:52 PM
+	[INFO] successfully read from file: C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\data.txt
+2/13/2017 9:40:27 PM
+	[INFO] successfully read from file: C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\data.txt
+2/13/2017 9:42:10 PM
+	[INFO] successfully read from file: C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\data.txt
+2/13/2017 9:44:38 PM
+	[INFO] successfully read from file: C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\data.txt

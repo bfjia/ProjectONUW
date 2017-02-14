@@ -192,6 +192,38 @@ namespace ONUW_CLIENT2
                 MessageBox.Show(e.ToString()); Environment.Exit(0);
             }
         }
+
+        private string sendRequest(string request)
+        {
+            //   return "thisisateststatement|||complete";
+            try
+            {
+                // richTextBox1.Clear();
+                sendReady.Reset();
+                receiveDone.Reset();
+                sendDone.Reset();
+                connectDone.Reset();
+                client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                StartClient();
+
+                // Send test data to the remote device.
+                richTextBox1.AppendText("\n" + "Sending Text...");
+                Send(client, request);
+                sendDone.WaitOne();
+                // Receive the response from the remote device.
+                Receive(client);
+                receiveDone.WaitOne();
+                richTextBox1.AppendText("\n" + "Closing connection to server...");
+                client.Shutdown(SocketShutdown.Both);
+                client.Close();
+                client.Dispose();
+                richTextBox1.AppendText("\n" + "Connection Closed");
+                return ReceivedContent;
+
+            }
+            catch (Exception exc) { MessageBox.Show(exc.ToString()); return "error"; }
+        }
+
         #endregion
 
         #region ONUW game functions
@@ -209,6 +241,7 @@ namespace ONUW_CLIENT2
             button1.Text = "Save!";
             if (Environment.MachineName.ToLower().Contains("brian") || Environment.MachineName.ToLower().Contains("tam") || Environment.MachineName.ToLower().Contains("auxori") || Environment.MachineName.ToLower().Contains("gucciball"))
                 Console.WriteLine("screw you brian tam");
+            //button4.Visible = true;
         }
 
         private void button1_Click_1(object sender, EventArgs e) //connect
@@ -228,7 +261,6 @@ namespace ONUW_CLIENT2
             }
             else
             {
-
                 //NEW PLAYER JOINS, FIRST COMMAND GETS GUID
                 if (textBox1.Text != "")
                 {
@@ -353,7 +385,7 @@ namespace ONUW_CLIENT2
                     {
                         onlyOne = false;
                         if ((string)playerButtons[p].Tag == playerData.players[p].gameID)
-                            playerButtons[p].Text = "<Player> " + playerData.players[p].gameTag + " Role: " + playerData.players[p].role + "?";
+                            playerButtons[p].Text = "<Player> " + playerData.players[p].gameTag + "\nRole: " + playerData.players[p].role + "?";
                     }
                 }
 
@@ -401,7 +433,7 @@ namespace ONUW_CLIENT2
                     {
                         onlyOne = false;
                         if ((string)playerButtons[p].Tag == playerData.players[p].gameID)
-                            playerButtons[p].Text = "<Player> " + playerData.players[p].gameTag + " Role: " + playerData.players[p].role + "?";
+                            playerButtons[p].Text = "<Player> " + playerData.players[p].gameTag + "\nRole: " + playerData.players[p].role + "?";
                     }
                 }
 
@@ -431,7 +463,7 @@ namespace ONUW_CLIENT2
                     {
                         onlyOne = false;
                         if ((string)playerButtons[p].Tag == playerData.players[p].gameID)
-                            playerButtons[p].Text = "<Player> " + playerData.players[p].gameTag + " Role: " + playerData.players[p].role + "?";
+                            playerButtons[p].Text = "<Player> " + playerData.players[p].gameTag + "\nRole: " + playerData.players[p].role + "?";
                     }
                 }
 
@@ -460,7 +492,7 @@ namespace ONUW_CLIENT2
                             }
                             for (int p = 0; p < playerData.players.Count; p++)
                                 if ((string)playerButtons[p].Tag == guidClicked)
-                                    playerButtons[p].Text = "<Player> " + playerData.players[p].gameTag + " Role: " + playerData.players[p].role + "?";
+                                    playerButtons[p].Text = "<Player> " + playerData.players[p].gameTag + "\nRole: " + playerData.players[p].role + "?";
                             guidClicked = "";
                             numRevealed++;
                             goto endOfMysticWolf;
@@ -505,7 +537,7 @@ namespace ONUW_CLIENT2
                                 if ((string)playerButtons[p].Tag == guidClicked)
                                 {
                                     if (playerButtons[p].Text.Contains("Unknown"))
-                                        playerButtons[p].Text = "<Player> " + playerData.players[p].gameTag + " Role: " + playerData.players[p].role + "?";
+                                        playerButtons[p].Text = "<Player> " + playerData.players[p].gameTag + "\nRole: " + playerData.players[p].role + "?";
                                     else
                                     {
                                         MessageBox.Show("Why would you waste your ability, you already know that player is the werewolf?");
@@ -537,14 +569,14 @@ namespace ONUW_CLIENT2
                     if (playerData.players[p].role == "werewolf")
                     {
                         if ((string)playerButtons[p].Tag == (playerData.players[p].gameID))
-                            playerButtons[p].Text = "<Player> " + playerData.players[p].gameTag + " Role: " + playerData.players[p].role + "?";
+                            playerButtons[p].Text = "<Player> " + playerData.players[p].gameTag + "\nRole: " + playerData.players[p].role + "?";
                     }
                 }*/
                 foreach (Players p in playerData.players)
                     if (p.role == "werewolf")
                         foreach (Button b in playerButtons)
                             if ((string)b.Tag == p.gameID)
-                                b.Text = "<Player> " + p.gameTag + " Role: " + p.role + "?";
+                                b.Text = "<Player> " + p.gameTag + "\nRole: " + p.role + "?";
 
                 string actionResult = sendPerformActionRequest("");
                 self.actionResult = actionResult;
@@ -602,7 +634,7 @@ namespace ONUW_CLIENT2
                                         {
                                             if (b.Text.Contains("<Player>") && b.Text.Contains("Unknown"))
                                             {
-                                                b.Text = b.Text = "<Player> " + p.gameTag + " Role: " + p.role + "?";
+                                                b.Text = b.Text = "<Player> " + p.gameTag + "\nRole: " + p.role + "?";
                                                 numRevealed = 3;
                                                 goto Foo;
                                             }
@@ -721,9 +753,9 @@ namespace ONUW_CLIENT2
                                 foreach (Button b in playerButtons)
                                 {
                                     if ((string)b.Tag == p.gameID)
-                                        b.Text = "<Player> " + p.gameTag + " Role: " + p.role + "?";
+                                        b.Text = "<Player> " + p.gameTag + "\nRole: " + p.role + "?";
                                     else if ((string)b.Tag == self.gameID)
-                                        b.Text = "<ME> " + self.gameTag + " Role: " + self.role + "?";
+                                        b.Text = "<ME> " + self.gameTag + "\nRole: " + self.role + "?";
                                 }
                                 guidClicked = "";
                                 string actionResult = sendPerformActionRequest(p.gameID);
@@ -849,7 +881,7 @@ namespace ONUW_CLIENT2
 
                 foreach (Button b in playerButtons)
                     if ((string)b.Tag == self.gameID)
-                        b.Text = "<ME> " + self.gameTag + " Role: " + self.role;
+                        b.Text = "<ME> " + self.gameTag + "\nRole: " + self.role;
                 #endregion
             }
             /*else if (self.role == "hunter")
@@ -947,6 +979,7 @@ namespace ONUW_CLIENT2
         {
             //richTextBox1.AppendText(JsonConvert.SerializeObject(playerData));
             //TEST FUNCTIONS
+            
             Jia.Library l = new Jia.Library();
             string data = string.Join("\n", l.read(path: System.IO.Directory.GetCurrentDirectory() + "\\data.txt"));
             JsonStruct pd = JsonConvert.DeserializeObject<JsonStruct>(data);
@@ -957,6 +990,45 @@ namespace ONUW_CLIENT2
             generatePlayerButtons(pd);
             button3.Show();
 
+            /*
+            var radius = 210;
+            var angle = 360 / 15 * Math.PI / 180.0f;
+            var center = new Point(210, 210);
+            var testButtons = new List<Button>();
+
+            for (int i = 0; i < 15; i++)
+            {
+                var x = richTextBox2.Width + 50 + center.X + Math.Cos(angle * i) * radius;
+                var y = center.Y + Math.Sin(angle * i) * radius;
+                Button newButton = new Button();
+                newButton.Left = (int)(x);
+                newButton.Top = (int)(y);
+                newButton.Height = 65;
+                newButton.Width = 125;
+                newButton.Text = i.ToString() + "asdfasdfasdfasdfasdfasdfsadfasdfasfd";
+                newButton.Click += new EventHandler(this.generatedButtonClickEvent);
+
+                this.Controls.Add(newButton);
+                newButton.Show();
+                playerButtons.Add(newButton);
+            }
+
+            for (int i = 0; i < 3; i++)
+            {
+                var x = center.X + richTextBox2.Width + 25;
+                var y = center.Y + i * 25;
+                Button newButton = new Button();
+                newButton.Left = (int)(x);
+                newButton.Top = (int)(y);
+                newButton.Height = 20;
+                newButton.Width = 200;
+                newButton.Text = i.ToString() + "middle asdfasdfasdfasdf";
+                newButton.Click += new EventHandler(this.generatedButtonClickEvent);
+
+                this.Controls.Add(newButton);
+                newButton.Show();
+                middleButtons.Add(newButton);
+            }*/
         }
 
         private void button5_Click(object sender, EventArgs e) //vote button
@@ -1084,47 +1156,11 @@ namespace ONUW_CLIENT2
                 MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information);
             if (dr == DialogResult.Yes)
             {
-                int i = 1;
-                while (i < 5000)
-                {
-                    // Application.DoEvents();
-                    richTextBox2.AppendText("\nAttempting to resync the game with the server...");
-                    i++;
-                }
+                //fml i dont work :(
                 richTextBox2.AppendText("Server did not reply with a valid resync response -- is /oos support turned on?");
             }
         }
         
-        private string sendRequest(string request)
-        {
-            //   return "thisisateststatement|||complete";
-            try
-            {
-                // richTextBox1.Clear();
-                sendReady.Reset();
-                receiveDone.Reset();
-                sendDone.Reset();
-                connectDone.Reset();
-                client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                StartClient();
-
-                // Send test data to the remote device.
-                richTextBox1.AppendText("\n" + "Sending Text...");
-                Send(client, request);
-                sendDone.WaitOne();
-                // Receive the response from the remote device.
-                Receive(client);
-                receiveDone.WaitOne();
-                richTextBox1.AppendText("\n" + "Closing connection to server...");
-                client.Shutdown(SocketShutdown.Both);
-                client.Close();
-                client.Dispose();
-                richTextBox1.AppendText("\n" + "Connection Closed");
-                return ReceivedContent;
-
-            }
-            catch (Exception exc) { MessageBox.Show(exc.ToString()); return "error"; }
-        }
         private string sendPerformActionRequest(string action)
         {
             string request = self.gameID + "|||performRoleAction>>>" + action;
@@ -1175,43 +1211,53 @@ namespace ONUW_CLIENT2
             //   return response2.Substring(23);
         }
 
+        //player buttons generation
         private void generatePlayerButtons(JsonStruct playerData)
         {
+            //generate player buttons in a circle
+            var radius = 210;
+            var angle = 360 / playerData.totalPlayers * Math.PI / 180.0f;
+            var center = new Point(210, 210);
+            var testButtons = new List<Button>();
 
-            Button button;
-
-            for (int i = 0; i < playerData.totalPlayers; i++) //
+            for (int i = 0; i < playerData.totalPlayers; i++)
             {
-                button = new Button();
-                button.Width = 350;
-                button.Height = 20;
-                button.Left = this.Width - button.Width / 4 - button.Width;
-                button.Top = button.Height + i * button.Height;
-
+                var x = richTextBox2.Width + 50 + center.X + Math.Cos(angle * i) * radius;
+                var y = center.Y + Math.Sin(angle * i) * radius;
+                Button newButton = new Button();
+                newButton.Left = (int)(x);
+                newButton.Top = (int)(y);
+                newButton.Height = 65;
+                newButton.Width = 125;
                 if (playerData.players[i].gameID == self.gameID)
-                    button.Text = "<ME> " + playerData.players[i].gameTag + " Role: " + playerData.players[i].role;
+                    newButton.Text = "<ME> " + playerData.players[i].gameTag + " \nRole: " + playerData.players[i].role;
                 else
-                    button.Text = "<Player> " + playerData.players[i].gameTag + " Role: " + "Unknown"; // playerData.players[i].role;
-                button.Tag = playerData.players[i].gameID;
-                button.Click += new EventHandler(this.generatedButtonClickEvent);
-                //button.Text = i.ToString();
-                this.Controls.Add(button);
-                button.Show();
-                playerButtons.Add(button);
+                    newButton.Text = "<Player> " + playerData.players[i].gameTag + " \nRole: " + "Unknown"; // playerData.players[i].role;
+                newButton.Tag = playerData.players[i].gameID;
+                newButton.Click += new EventHandler(this.generatedButtonClickEvent);
+
+                this.Controls.Add(newButton);
+                newButton.Show();
+                playerButtons.Add(newButton);
             }
+
+            //middle cards
             for (int i = 0; i < 3; i++)
             {
-                button = new Button();
-                button.Width = 200;
-                button.Height = 20;
-                button.Left = this.Width - button.Width - button.Width;
-                button.Top = this.Height - button.Height * 3 - 50 + i * button.Height;
-                button.Text = "Middle Card " + (i + 1).ToString() + ": " + "Unknown"; // + playerData.middleCards[i];
-                button.Tag = (i + 1).ToString();
-                button.Click += new EventHandler(this.generatedButtonClickEvent);
-                this.Controls.Add(button);
-                button.Show();
-                middleButtons.Add(button);
+                var x = center.X + richTextBox2.Width + 15 ;
+                var y = center.Y -2 + i*25;
+                Button newButton = new Button();
+                newButton.Left = (int)(x);
+                newButton.Top = (int)(y);
+                newButton.Height = 20;
+                newButton.Width = 200;
+                newButton.Text = "Middle Card " + (i + 1).ToString() + ": " + "Unknown"; // + playerData.middleCards[i];
+                newButton.Tag = (i + 1).ToString();
+                newButton.Click += new EventHandler(this.generatedButtonClickEvent);
+
+                this.Controls.Add(newButton);
+                newButton.Show();
+                middleButtons.Add(newButton);
             }
         }
         private void generatePlayerButtonsRevealed(JsonStruct playerData)
@@ -1228,9 +1274,9 @@ namespace ONUW_CLIENT2
                 button.Top = button.Height + i * button.Height;
 
                 if (playerData.players[i].gameID == self.gameID)
-                    button.Text = "<ME> " + playerData.players[i].gameTag + " Role: " + playerData.players[i].role;
+                    button.Text = "<ME> " + playerData.players[i].gameTag + "\nRole: " + playerData.players[i].role;
                 else
-                    button.Text = "<Player> " + playerData.players[i].gameTag + " Role: " + playerData.players[i].role;
+                    button.Text = "<Player> " + playerData.players[i].gameTag + "\nRole: " + playerData.players[i].role;
                 button.Tag = playerData.players[i].gameID;
                 button.Click += new EventHandler(this.generatedButtonClickEvent);
                 //button.Text = i.ToString();
@@ -1253,7 +1299,8 @@ namespace ONUW_CLIENT2
                 middleButtons.Add(button);
             }
         }
-        private void generatedButtonClickEvent(object sender, EventArgs e)
+
+        private void generatedButtonClickEvent(object sender, EventArgs e)//assign guid (button.tag) clicked to a variable
         {
             var button = sender as Button;
             if (allowButtonClicks)

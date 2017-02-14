@@ -21,4 +21,3 @@ C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_SERVER\bin\Debug\Newtonsoft.Json
 C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_SERVER\bin\Debug\Newtonsoft.Json.xml
 C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_SERVER\obj\Debug\ONUW_SERVER.exe
 C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_SERVER\obj\Debug\ONUW_SERVER.pdb
-C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_SERVER\obj\Debug\ONUW_SERVER.csprojResolveAssemblyReference.cache
