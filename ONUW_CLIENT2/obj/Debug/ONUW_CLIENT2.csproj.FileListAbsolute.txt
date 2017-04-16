@@ -18,3 +18,4 @@ C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\ONUW_CLIENT2.e
 C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\bin\Debug\ONUW_CLIENT2.application
 C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\obj\Debug\ONUW_CLIENT2.exe.manifest
 C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\obj\Debug\ONUW_CLIENT2.application
+C:\Users\JJJIIIIAAAAA\OneDrive\ProjectONUW\ONUW_CLIENT2\obj\Debug\ONUW_CLIENT2.csprojResolveAssemblyReference.cache

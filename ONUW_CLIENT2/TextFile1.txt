@@ -1,0 +1,6 @@
+﻿Does this work:
+1. no change to server, everyone does their action async
+	1.1 action input is stored in the list ActionInputs<guid> and the actionDone flag is set to true
+2. during performActions(), store the 'current' json in actionResults and return it to client as the allplayers json
+3. Client parse the json in it's own actionResult from the json of AllPlayers.
+4. Display result on screen and proceed to discussion.

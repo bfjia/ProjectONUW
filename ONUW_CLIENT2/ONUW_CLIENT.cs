@@ -774,6 +774,7 @@ namespace ONUW_CLIENT2
             }
             else if (self.role == "paranormal investigator")
             {
+                //HUGE PROBLEM, IF ROBBER ROBS THIS GUY, ITS OVER. THE ROBBER SEES THIS IS A PI
                 #region PI
                 label1.Text = "Choose to see up to two player cards...";
                 string first = "";
@@ -923,6 +924,10 @@ namespace ONUW_CLIENT2
             foo:
                 guidClicked = "";
                 #endregion
+            }
+            else if (self.role == "witch")
+            {
+                
             }
             else if (self.role == "robber")
             {

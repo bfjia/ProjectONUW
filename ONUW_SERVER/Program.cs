@@ -246,6 +246,18 @@ namespace ONUW_SERVER
                     p.actionDone = true;
                 }
             }
+            else if (p.role == "witch")
+            {
+                if (inputs.Count == 1)
+                {
+                    p.actionInput = inputs;
+                    p.actionDone = true;
+                }
+                else
+                {
+                    p.actionDone = true;
+                }
+            }
             else if (p.role == "robber")
             {
                 //in: 1guid
@@ -458,7 +470,7 @@ namespace ONUW_SERVER
             if (playerRoles.ContainsKey("paranormal investigator"))
             {
                 //client side
-                if (players[playerRoles["paranormal investigator"]].actionInput.Count > 0)
+                if (players[playerRoles["paranormal investigator"]].actionInput != null)
                 {
                     players[playerRoles["paranormal investigator"]].role = players[playerRoles["paranormal investigator"]].actionInput[0];
                     players[playerRoles["paranormal investigator"]].actionResult = "PI role switched with " + players[playerRoles["paranormal investigator"]].actionInput[0];
@@ -479,6 +491,17 @@ namespace ONUW_SERVER
             }
             if (playerRoles.ContainsKey("witch"))
             {
+                //client side
+                if (players[playerRoles["witch"]].actionInput != null)
+                {
+                    players[playerRoles["witch"]].role = players[playerRoles["witch"]].actionInput[0];
+                    players[playerRoles["witch"]].actionResult = "witch role switched with " + players[playerRoles["paranormal investigator"]].actionInput[0];
+                }
+                else
+                {
+                    players[playerRoles["witch"]].actionResult = "Completed";
+                }
+                Console.WriteLine("witch action registered");
             }
             if (playerRoles.ContainsKey("pickpocket"))
             {
